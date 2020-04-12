@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Requests\LoginValidate;
+use App\Http\Validator\Admin\LoginController;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,6 +69,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'login' => LoginValidate::class,
     ];
 
     /**

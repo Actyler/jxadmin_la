@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -20,6 +25,7 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
+//    use FormRequest;
 
     use AuthenticatesUsers;
 
@@ -67,7 +73,7 @@ class LoginController extends Controller
 
         // 验证邮箱登录方式
         $emailLogin = $this->guard()->attempt(
-            ['email' => $username, 'password' => $password, 'status' => 1], $request->has('remember')
+            ['email' => $username, 'password' => $password], $request->has('remember')
         );
         if ($emailLogin) {
             return true;
@@ -76,10 +82,47 @@ class LoginController extends Controller
     }
 
     /**
+     * Validate the user login request.
+     *
+     * @param Request $request
+     *
+     */
+    protected function validateLogin(Request $request)
+    {
+        $validate = [
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ];
+        if(config('captcha.enable'))
+            $validate['verify'] = 'required|captcha';
+
+        $rule = [
+            'require'   =>  ':attribute不能为空',
+            'string'    =>  ':attribute需为字符串',
+            'captcha'   =>  ':attribute校验错误'
+        ];
+
+        $field = [
+            $this->username()   =>  '用户名',
+            'password'          =>  '密码',
+            'verify'            =>  '验证码'
+        ];
+
+
+        $validator = Validator::make($request->all(),$validate,$rule,$field);
+
+        if($validator->fails())
+        {
+            throw new HttpResponseException(response()->json(['status'=>-1,'msg'=>$validator->errors()->first()],
+                200));
+        }
+    }
+
+    /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @return RedirectResponse|Redirector
      */
     public function logout(Request $request)
     {
@@ -98,6 +141,30 @@ class LoginController extends Controller
     public function username()
     {
         return "nickname";
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+            ?: response()->json(['status'=>1,'msg'=>'登录成功','url'=>$this->redirectPath()]);
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        return response()->json(['status'=>-1,'msg'=>'用户名或密码错误']);
+//        throw ValidationException::withMessages([
+//            $this->username() => [trans('auth.failed')],
+//        ]);
     }
 
 }
