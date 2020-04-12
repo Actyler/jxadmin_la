@@ -87,6 +87,7 @@ class LoginController extends Controller
      * @param Request $request
      *
      */
+
     protected function validateLogin(Request $request)
     {
         $validate = [
