@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Exception;
 
 class RedirectIfAuthenticated
 {
@@ -20,13 +21,15 @@ class RedirectIfAuthenticated
     {
         $admin = RouteServiceProvider::ADMIN;
         $admin_login = RouteServiceProvider::ADMIN_LOGIN;
-        if (Auth::guard($guard)->check()) {
-            if($request->path() == $admin_login)
+        if (Auth::guard($guard)->check())
+        {
+            if('/'.$request->path() == $admin_login)
                 return redirect($admin);
             return $next($request);
         }
 
-        if('/'.$request->path() == $admin_login){
+        if('/'.$request->path() == $admin_login)
+        {
             return $next($request);
         }
         return redirect($admin_login);

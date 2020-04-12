@@ -40,7 +40,7 @@ class Seeds extends Seeder
         $time = time();
         Admin::truncate();
         Admin::insert([
-            'nickname'      =>      'admin',
+            'username'      =>      'admin',
             'email'         =>      'admin@gmail.com',
             'password'      =>      Hash::make('000000'),
             'status'        =>      1,

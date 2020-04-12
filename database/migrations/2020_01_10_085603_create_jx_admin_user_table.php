@@ -13,10 +13,10 @@ class CreateJxAdminUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('admin_user', function (Blueprint $table) {
+        Schema::create('admin', function (Blueprint $table) {
             $table->comment = '后台管理员账户';
             $table->bigIncrements('id');
-            $table->string('nickname',255)->comment('昵称');
+            $table->string('username',255)->comment('用户名');
             $table->string('email',255)->comment('邮箱');
             $table->string('password',255)->comment('密码');
             $table->string('head_pic',255)->nullable()->comment('头像');
@@ -33,6 +33,6 @@ class CreateJxAdminUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_user');
+        Schema::dropIfExists('admin');
     }
 }

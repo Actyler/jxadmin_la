@@ -7,5 +7,5 @@ use Illuminate\Foundation\Auth\User;
 
 class Admin extends User
 {
-    public $table = 'admin_user';
+    public $table = 'admin';
 }

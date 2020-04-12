@@ -59,12 +59,12 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        $username = $request->input('nickname');
+        $username = $request->input('username');
         $password = $request->input('password');
 
         // 验证用户名登录方式
         $usernameLogin = $this->guard()->attempt(
-            ['nickname' => $username, 'password' => $password, 'status' => 1], $request->has('remember')
+            ['username' => $username, 'password' => $password, 'status' => 1], $request->has('remember')
         );
 
         if ($usernameLogin) {
@@ -141,7 +141,7 @@ class LoginController extends Controller
 
     public function username()
     {
-        return "nickname";
+        return "username";
     }
 
     /**
