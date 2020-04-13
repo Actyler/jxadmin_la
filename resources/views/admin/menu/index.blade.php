@@ -49,11 +49,11 @@
     CodeGoods.initColumn = function () {
         return [
             {field: 'selectItem', radio: true},
-            {title: '编号', field: 'menu_id', visible: true, align: 'lelf', valign: 'middle'},
+            {title: '编号', field: 'menu_id', visible: true, align: 'left', valign: 'middle'},
             {title: '排序', field: 'menu_id', visible: true, align: 'center', valign: 'middle',formatter: 'CodeGoods.arrowFormatter'},
-            {title: '名称', field: 'ctitle', visible: true, align: 'lelf', valign: 'middle'},
-            {title: '名称', field: 'title', visible: false, align: 'lelf', valign: 'middle'},
-            {title: '控制器名', field: 'controller', visible: true, align: 'lelf', valign: 'middle'},
+            {title: '名称', field: 'ctitle', visible: true, align: 'left', valign: 'middle'},
+            {title: '名称', field: 'title', visible: false, align: 'left', valign: 'middle'},
+            {title: '控制器名', field: 'controller', visible: true, align: 'left', valign: 'middle'},
             {title: '数据库表名', field: 'table', visible: true, align: 'left', valign: 'middle'},
             {title: '是否生成代码', field: 'is_create', visible: true, align: 'center', valign: 'middle',formatter: 'CodeGoods.is_createFormatter'},
             {title: '显示菜单', field: 'status', visible: true, align: 'center', valign: 'middle',formatter: 'CodeGoods.statusFormatter'},
@@ -73,7 +73,7 @@
 
     CodeGoods.is_createFormatter = function(value,row,index) {
         if(value !== null){
-            if(value == 1){
+            if(value === 1){
                 return '<input class="mui-switch mui-switch-animbg status'+row.menu_id+'" type="checkbox" onclick="CodeGoods.setStatus(\'is_create\','+row.menu_id+',0)" checked>';
             }else{
                 return '<input class="mui-switch mui-switch-animbg status'+row.menu_id+'"  type="checkbox" onclick="CodeGoods.setStatus(\'is_create\','+row.menu_id+',1)">';
@@ -83,7 +83,7 @@
 
     CodeGoods.setStatus = function(field,pk,value) {
         var ajax = new $ax("setStatus", function (data) {
-            if (1 !== data.status) {
+            if (data.status !== 1) {
                 Feng.error(data.msg);
                 $(".status"+pk).prop("checked",!$(".status"+pk).prop("checked"));
             }
@@ -93,7 +93,7 @@
         ajax.set('menu_id', pk);
         ajax.set('value', value);
         ajax.start();
-    }
+    };
 
 
     CodeGoods.statusFormatter = function(value,row,index) {

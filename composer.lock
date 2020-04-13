@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57c4a8cc2a781c2bbd2506b50efef04d",
+    "content-hash": "09eaa2e91fdb253a72fedea2779cdb0e",
     "packages": [
         {
             "name": "caouecs/laravel-lang",
@@ -3740,6 +3740,51 @@
                 "environment"
             ],
             "time": "2019-09-10T21:37:39+00:00"
+        },
+        {
+            "name": "zedisdog/laravel-schema-extend",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zedisdog/laravel-schema-extend.git",
+                "reference": "28f6ccf559f9cb1c5c76958258f60c2c081d3dfe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zedisdog/laravel-schema-extend/zipball/28f6ccf559f9cb1c5c76958258f60c2c081d3dfe",
+                "reference": "28f6ccf559f9cb1c5c76958258f60c2c081d3dfe",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "laravel/framework": "^5.0|^6.0|^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0|^6.0|^8.4|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jialeo\\LaravelSchemaExtend\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "zed",
+                    "email": "2692273254@qq.com"
+                }
+            ],
+            "description": "supplement for eloquent migration",
+            "time": "2020-03-25T13:08:30+00:00"
         }
     ],
     "packages-dev": [

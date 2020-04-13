@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Model\Menu;
+use App\Http\Model\Admin\Menu;
 
 class AdminBaseController extends Controller
 {
@@ -13,7 +13,7 @@ class AdminBaseController extends Controller
     }
 
     public function getMenuTree($where=['pid'=>0]){
-        $list = Menu::menuList($where);
+        $list = Menu::list($where);
 
         foreach ($list as $key => $value){
             $where['pid'] = $value['menu_id'];

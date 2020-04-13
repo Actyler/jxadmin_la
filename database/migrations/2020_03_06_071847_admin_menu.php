@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+//use Illuminate\Support\Facades\Schema;
+use Jialeo\LaravelSchemaExtend\Schema;
 
 class AdminMenu extends Migration
 {
@@ -30,6 +31,7 @@ class AdminMenu extends Migration
             $table->unsignedTinyInteger('level')->default(0)->comment('菜单等级');
             $table->string('tab_menu',500)->nullable()->comment('Tab栏菜单 |分隔');
             $table->tinyInteger('is_submit')->default(1)->comment('是否允许提交 0否 1是');
+            $table->tinyInteger('has_time')->default(1)->comment('是否包含创建与修改时间 0否 1是');
             $table->unsignedMediumInteger('sort')->default(0)->comment('排序');
             $table->tinyInteger('status')->default(1)->comment('启用状态 0禁用 1启用');
             $table->unsignedInteger('create_time')->nullable();
@@ -64,6 +66,7 @@ class AdminMenu extends Migration
             $table->unsignedInteger('create_time')->nullable()->comment('创建时间');
             $table->unsignedInteger('update_time')->nullable()->comment('更新时间');
         });
+
     }
 
     /**

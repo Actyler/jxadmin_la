@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by ACTyler.
- * Email: aichao0127@gmail.com
- * Date: 2020/1/9
- * Time: 16:56
- */
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Model\Menu;
+use App\Http\Model\Admin\Menu;
 use Illuminate\Support\Facades\DB;
 
 class LayoutController extends AdminBaseController

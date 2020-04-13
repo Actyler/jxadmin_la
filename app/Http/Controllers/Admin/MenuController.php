@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Model\Menu;
+use App\Http\Model\Admin\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +25,7 @@ class MenuController extends AdminBaseController
             $assign = ['menu_list'=>$menu_list, 'action'=>$input['action']];
             if($input['action'] == 'edit'){
                 $menu_id = $request->input('menu_id');
-                $info = Menu::menuInfo($menu_id);
+                $info = Menu::info($menu_id);
                 $assign['info'] = $info;
             }
             return view('admin.menu.info',$assign);
@@ -37,7 +37,7 @@ class MenuController extends AdminBaseController
             dd(1);
         }else{
             $menu_id = $request->input('menu_id');
-            $info = Menu::menuInfo($menu_id);
+            $info = Menu::info($menu_id);
             $menu_list = $this->formatMenu($this->getMenuTree());
             return view('admin.menu.info',['menu_list'=>$menu_list, 'info'=>$info, 'action'=>'edit']);
         }

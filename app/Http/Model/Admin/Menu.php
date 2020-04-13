@@ -1,28 +1,31 @@
 <?php
 
-namespace App\Http\Model;
+namespace App\Http\Model\Admin;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Support\Facades\DB;
+use App\Http\Model\BaseModel;
 
-class Menu extends Model
+class Menu extends BaseModel
 {
     protected $table = 'admin_menu';
     protected $primaryKey = 'menu_id';
-    public $timestamps = false;
+    public $timestamps = true;
 
-    public static function menuList($where=[],$limit='100',$field='*',$orderby='sort asc'){
+
+    public static function list($where=[],$limit='100',$field='*',$orderby='sort asc'){
         return Menu::select($field)->where($where)->orderByRaw($orderby)->limit($limit)->get();
     }
 
-    public static function menuInfo($menu_id){
+    public static function info($menu_id){
         return Menu::where(['menu_id'=>$menu_id])->first();
     }
 
     public static function setStatus($field,$id,$value){
-        $time = time();
+        $data = [$field=>$value];
+
         try {
-            $res = Menu::where(['menu_id'=>$id])->update([$field=>$value,'update_time'=>$time]);
+            $res = Menu::where(['menu_id'=>$id])->update($data);
             if($res)
                 return ['status'=>1,'msg'=>'操作成功'];
             return ['status'=>-1,'msg'=>'操作失败'];
@@ -32,14 +35,12 @@ class Menu extends Model
     }
 
     public static function edit($data){
-        $time = time();
         $action = $data['action'];
         unset($data['action']);
-        $data['update_time'] = $time;
+
         try {
             if($action == 'add') {
                 unset($data['menu_id']);
-                $data['create_time'] = $time;
                 $res = Menu::insert($data);
             }else{
                 $res = Menu::where(['menu_id'=>$data['menu_id']])->update($data);
