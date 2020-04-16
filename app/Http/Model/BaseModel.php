@@ -10,7 +10,7 @@ class BaseModel extends Model
     const CREATED_AT = 'create_time';
     const UPDATED_AT = 'update_time';
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     /**
      * 获取当前时间

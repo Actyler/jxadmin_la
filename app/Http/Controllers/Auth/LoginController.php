@@ -114,8 +114,7 @@ class LoginController extends Controller
 
         if($validator->fails())
         {
-            throw new HttpResponseException(response()->json(['status'=>-1,'msg'=>$validator->errors()->first()],
-                200));
+            throw new HttpResponseException(jsonReturn(-1,$validator->errors()->first()));
         }
     }
 
@@ -157,12 +156,13 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-            ?: response()->json(['status'=>1,'msg'=>'登录成功','url'=>$this->redirectPath()]);
+            ?: jsonReturn(1,'登录成功',$this->redirectPath());
+
     }
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        return response()->json(['status'=>-1,'msg'=>'用户名或密码错误']);
+        return jsonReturn(-1,"用户名或密码错误");
 //        throw ValidationException::withMessages([
 //            $this->username() => [trans('auth.failed')],
 //        ]);

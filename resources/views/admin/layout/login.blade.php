@@ -124,10 +124,10 @@
 
 
         var ajax = new $ax("login", function (data) {
-            if (1 === data.status) {
+            if (data.status == 1) {
                 Feng.success(data.msg);
                 $("#submit").val('正在登陆');
-                window.location.href= data.url;
+                window.location.href= data.data;
             } else {
                 if( "{{ config('captcha.enable') }}") {
                     $("#img").attr('src', "{{ captcha_src() }}");
